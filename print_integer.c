@@ -21,18 +21,5 @@ int _printf(const char *format, ...)
 		{
 			int m = va_arg(args, int);
 			int d = 1;
-
-		else if (m < 0)
-		{
-		_putchar('-');
-		m = -m;
-		}
-	if (m / d > 9)
-	{
-
-	}
-	format++;
-	}
-	va_end(m);
-	return (z);
+			}
 }
