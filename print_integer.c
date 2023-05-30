@@ -1,12 +1,13 @@
 #include "main.h"
 #include <stdlib.h>
 #include <stdarg.h>
+#include <stdio.h>
 
 /**
- * _printf - printf statement that handle %d and %i
+ * _printf - prints integers to stdout
  * @format: character string to be used
- * @...: various arguments
- * Return: z
+ * @...: different argument contained in the function
+ * Return: integer
  */
 
 int _printf(const char *format, ...)
@@ -14,10 +15,9 @@ int _printf(const char *format, ...)
 	va_list m;
 
 	va_start(m, format);
-
 	while (*format != '\0')
 	{
-		if (*format == '%')
+		if (*format == 0)
 		{
 			format++;
 			switch (*format)
@@ -25,9 +25,26 @@ int _printf(const char *format, ...)
 				case 'd':
 				case 'i':
 					{
-						int num = va_arg(m, int);
-						
+						int b = va_arg(m, int);
+						int len = snprintf(NULL, 0, "%d", b);
+						char *integer = malloc(sizeof(char) * (len + 1));
+
+						sprintf(integer, "%d", b);
+						fputs(integer, stdout);
+						free(integer);
+						break;
 					}
+				default:
+					putchar(*format);
+					break;
 			}
 		}
+		else
+		{
+			putchar(*format);
+		}
+		format++;
+	}
+	va_end(m);
+	return (0);
 }
