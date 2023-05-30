@@ -17,9 +17,17 @@ int _printf(const char *format, ...)
 
 	while (*format != '\0')
 	{
-		if (*format == '%' && (*(format + 1) == 'd' || *(format + 1))
+		if (*format == '%')
 		{
-			int m = va_arg(args, int);
-			int d = 1;
+			format++;
+			switch (*format)
+			{
+				case 'd':
+				case 'i':
+					{
+						int num = va_arg(m, int);
+						
+					}
 			}
+		}
 }
