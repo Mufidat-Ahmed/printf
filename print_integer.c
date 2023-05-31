@@ -4,37 +4,82 @@
 #include <unistd.h>
 
 /**
- * print_integer - prints integers to stdout
- * @m: name of argument to be used
+ * _print_integer - prints integers to stdout
+ * @format: pointer character to be used
+ * ...: various arguments present in function
  * Return: integer
  */
 
-int _print_integer(va_list m)
+int _print_integer(const char *format, ...)
 {
-	int num = va_arg(m, int);
-	int z = 0;
+	char *mem;
+	int z = 0, i, git, num;
+	va_list m;
 
-	_putchar(num);
-	z += digits(num);
-	return (z);
-}
-/**
-* digits - Counts the digits in an integer
-* @num: The integer variable to be used
-* Return: The number of digits.
-*/
-int digits(int num)
-{
-	int z = 0;
+	va_start(m, format);
 
-	if (num == 0)
-		return (1);
-	if (num < 0)
-		z++;
-	while (num != 0)
+	while (*format)
 	{
-		num /= 10;
-		z++;
+		if (*format == '%')
+		{
+			format++;
+			if (*format == 'd' || *format == 'i')
+			{
+			if (num < 0)
+			{
+				num = va_arg(m, int);
+				_putchar('-');
+				z++;
+				num = -num;
+			}
+			}
+			if (num == 0)
+			{
+				_putchar('0');
+				z++;
+			}
+			else
+			{
+				int t = 0, digit = num;
+
+				while (digit > 0)
+				{
+					digit /= 10;
+					t++;
+				}
+				mem = malloc(sizeof(char) * (t + 1));
+
+					if (mem == NULL)
+					{
+						va_end(m);
+						return (-1);
+					}
+				git = t - 1;
+
+				while (num > 0)
+				{
+					int new = num % 10;
+
+					mem[git] = '0' + new;
+					num /= 10;
+					new--;
+				}
+				mem[t] = '\0';
+				for (i = 0; i < t; i++)
+				{
+					_putchar(mem[i]);
+					z++;
+				}
+				free(mem);
+			}
+		}
+		else
+		{
+			_putchar(*format);
+			z++;
+		}
+		format++;
 	}
-	return (z);
+	va_end(m);
+	return (0);
 }
