@@ -4,47 +4,37 @@
 #include <unistd.h>
 
 /**
- * _printf - prints integers to stdout
- * @format: character string to be used
- * @...: different argument contained in the function
+ * print_integer - prints integers to stdout
+ * @m: name of argument to be used
  * Return: integer
  */
 
-int _print_integer(const char *format, ...)
+int _print_integer(va_list m)
 {
-	va_list m;
+	int num = va_arg(m, int);
+	int z = 0;
 
-	va_start(m, format);
-	while (*format != '\0')
+	_putchar(num);
+	z += digits(num);
+	return (z);
+}
+/**
+* digits - Counts the digits in an integer
+* @num: The integer variable to be used
+* Return: The number of digits.
+*/
+int digits(int num)
+{
+	int z = 0;
+
+	if (num == 0)
+		return (1);
+	if (num < 0)
+		z++;
+	while (num != 0)
 	{
-		if (*format == 0)
-		{
-			format++;
-			switch (*format)
-			{
-				case 'd':
-				case 'i':
-					{
-						int b = va_arg(m, int);
-						int len = snprintf(NULL, 0, "%d", b);
-						char *integer = malloc(sizeof(char) * (len + 1));
-
-						sprintf(integer, "%d", b);
-						fputs(integer, stdout);
-						free(integer);
-						break;
-					}
-				default:
-					putchar(*format);
-					break;
-			}
-		}
-		else
-		{
-			putchar(*format);
-		}
-		format++;
+		num /= 10;
+		z++;
 	}
-	va_end(m);
-	return (0);
+	return (z);
 }
