@@ -1,7 +1,7 @@
 #include "main.h"
 #include <stdlib.h>
-#include <stdarg.h>
 #include <stdio.h>
+#include <unistd.h>
 
 /**
  * _printf - prints integers to stdout
@@ -10,7 +10,7 @@
  * Return: integer
  */
 
-int _printf(const char *format, ...)
+int _print_integer(const char *format, ...)
 {
 	va_list m;
 
@@ -47,4 +47,15 @@ int _printf(const char *format, ...)
 	}
 	va_end(m);
 	return (0);
+}
+/**
+ * _putchar - writes the character c to stdout
+ * @c: The character to print
+ *
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
+ */
+int _putchar(char c)
+{
+        return (write(1, &c, 1));
 }
